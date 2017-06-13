@@ -1,0 +1,61 @@
+
+
+
+Create db
+
+2. Start script:
+source start/mysql/initial.sql
+
+
+create db / user privileges:
+
+create database medievaldb DEFAULT CHARACTER SET utf8 COLLATE utf8_bin;
+
+-- Assuming local installation of Tomcat and J-Comm. You may have to create more users: one for any machine to connect from.
+-- You may use '%' to allow connection from any machine. In this case you need two 'wacweb' accounts: for 'localhost' and '%'.
+
+
+create user 'wacweb'@'localhost' identified by '#zyxel386';
+grant all privileges on wacweb.* to 'wacweb'@'localhost' with grant option;
+grant trigger on wacweb.* to 'wacweb'@'localhost';
+
+flush privileges;
+
+
+
+
+
+3. Connect to database as "wacweb" user (you may add "-v" parameter below to get sql echo):
+mysql -u wacweb -p -h localhost -P 3306
+And select 'wacweb' database:
+use wacweb
+
+
+
+
+plik tables.sql
+
+source tables/mysql/WAC_TM_DAY_TYPE.sql
+source tables/mysql/WAC_MEALS.sql
+source tables/mysql/WAC_H_VISIT_REASONS.sql
+source tables/mysql/WAC_TIME_TYPES.sql
+source tables/mysql/WAC_TM_TIME_PAIRS.sql
+source tables/mysql/WAC_TM_DAY.sql
+source tables/mysql/WAC_CARS.sql
+source tables/mysql/WAC_TPS_CARS.sql
+
+
+CREATE TABLE WAC_CARS(
+	BRAND		VARCHAR(32) NOT NULL,
+	MODEL		VARCHAR(64) NULL,
+	REGNR		VARCHAR(32) NOT NULL,
+	DESCRIPTION	VARCHAR(255) NULL,
+	DANGEROUS	CHAR(1) DEFAULT 'N' NOT NULL,
+	FKFIRM		INTEGER NULL,
+	LAST_MODIFIED DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE EXT_T_CROSS_DEPARTMENTS_ID ADD (CONSTRAINT EXT_T_CROSS_DEPARTMENTS_ID_PK PRIMARY KEY(EDPSID));
+
+ALTER TABLE WAC_MEALS add column ID INTEGER  NOT NULL AUTO_INCREMENT, ADD PRIMARY KEY (ID);
