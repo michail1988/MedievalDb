@@ -1,0 +1,5 @@
+create table MED_SCHEDULES(
+    TITLE varchar(100) not null
+ )
+
+ALTER TABLE MED_SCHEDULES add column ID INTEGER  NOT NULL AUTO_INCREMENT, ADD PRIMARY KEY (ID);
