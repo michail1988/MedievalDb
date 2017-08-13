@@ -1,4 +1,4 @@
-create table MED_COMMENTS(
+create table MED_NEWS_COMMENTS(
     FK_PARENTCOMMENT int null,
     FK_USER int not null,
     FK_POST int not null,
@@ -7,11 +7,12 @@ create table MED_COMMENTS(
     STATUS VARCHAR(1) NULL
  )
 
-ALTER TABLE MED_COMMENTS add column ID INTEGER  NOT NULL AUTO_INCREMENT, ADD PRIMARY KEY (ID);
+ALTER TABLE MED_NEWS_COMMENTS add column ID INTEGER  NOT NULL AUTO_INCREMENT, ADD PRIMARY KEY (ID);
 
 
---insert into MED_COMMENTS (FK_PARENTCOMMENT, COMMENT, FK_POST, FK_USER, DATE, STATUS) VALUES (null, 'Moj przyczynek do dyskusji', 17, 1, NOW(), 'N');
---insert into MED_COMMENTS (FK_PARENTCOMMENT, COMMENT, FK_POST, FK_USER, DATE, STATUS) VALUES (5, 'Koncz ten watek', 17, 3, NOW(), 'N');
+
+--insert into MED_NEWS_COMMENTS (FK_PARENTCOMMENT, COMMENT, FK_POST, FK_USER, DATE, STATUS) VALUES (null, 'Moj przyczynek do dyskusji', 17, 1, NOW(), 'N');
+--insert into MED_NEWS_COMMENTS (FK_PARENTCOMMENT, COMMENT, FK_POST, FK_USER, DATE, STATUS) VALUES (5, 'Koncz ten watek', 17, 3, NOW(), 'N');
 
       SELECT  c.comment as parentcomment, 
     c.date as parentdate, 
@@ -25,9 +26,10 @@ ALTER TABLE MED_COMMENTS add column ID INTEGER  NOT NULL AUTO_INCREMENT, ADD PRI
     (select concat(u.name, ' ', u.surname) FROM MED_USERS u where u.id = cc.fk_user) as username,
     cc.status as confirmed
 
-    FROM MED_COMMENTS as c
-    left JOIN MED_COMMENTS as cc 
+    FROM MED_NEWS_COMMENTS as c
+    left JOIN MED_NEWS_COMMENTS as cc 
       ON cc.FK_PARENTCOMMENT = c.id and c.status = cc.status
   where c.FK_PARENTCOMMENT is null
-         and c.status = 'Y' 
+               and c.status = 'Y' 
+  
 ORDER BY c.DATE ASC, cc.DATE ASC;
