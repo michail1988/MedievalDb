@@ -5,7 +5,7 @@ create table MED_COMMENTS(
     COMMENT varchar(1000),
     DATE DATETIME NOT NULL,
     STATUS VARCHAR(1) NULL
- )
+ );
 
 ALTER TABLE MED_COMMENTS add column ID INTEGER  NOT NULL AUTO_INCREMENT, ADD PRIMARY KEY (ID);
 
@@ -18,13 +18,11 @@ ALTER TABLE MED_COMMENTS add column ID INTEGER  NOT NULL AUTO_INCREMENT, ADD PRI
     c.id as parentid,
     (select concat(u.name, ' ', u.surname) FROM MED_USERS u where u.id = c.fk_user) as parentusername,
     c.status as parentconfirmed,
-
     cc.comment as comment, 
     cc.date as date, 
     cc.id as id,
     (select concat(u.name, ' ', u.surname) FROM MED_USERS u where u.id = cc.fk_user) as username,
     cc.status as confirmed
-
     FROM MED_COMMENTS as c
     left JOIN MED_COMMENTS as cc 
       ON cc.FK_PARENTCOMMENT = c.id and c.status = cc.status
