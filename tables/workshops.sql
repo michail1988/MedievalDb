@@ -1,5 +1,6 @@
 create table MED_WORKSHOPS(
-    TITLE varchar(100) not null,
+    HEADLINE varchar(100) null,
+    TITLE varchar(100) not null
     AUTHOR VARCHAR(32) NULL,
     CONTENT VARCHAR(3000) NULL, 
     CONTACT VARCHAR(3000) NULL,
